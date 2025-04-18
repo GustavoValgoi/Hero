@@ -11,7 +11,7 @@ import {
 } from '../__mocks__/hero.mock';
 import { HeroRepository } from '../repositories/hero.repository';
 
-describe('HeroService', () => {
+describe('Testes unitários HeroService', () => {
   let service: HeroService;
   let prisma: PrismaService;
 
@@ -33,13 +33,13 @@ describe('HeroService', () => {
 
   afterEach(() => jest.clearAllMocks());
 
-  it('should be defined', () => {
+  it('deve estar definido', () => {
     expect(service).toBeDefined();
     expect(prisma).toBeDefined();
   });
 
   describe('findById', () => {
-    it('should return a hero when searching for id', async () => {
+    it('deve retornar um herói ao buscar por id', async () => {
       const response = await service.findById(heroMock[0].id);
 
       expect(response).toEqual(heroMock[0]);
@@ -49,7 +49,7 @@ describe('HeroService', () => {
       });
     });
 
-    it('should throw an exception when not finding a hero by id', async () => {
+    it('deve disparar uma exceção ao tentar buscar um herói por id', async () => {
       jest.spyOn(prisma.hero, 'findFirst').mockResolvedValueOnce(null);
 
       await expect(service.findById(heroMock[0].id)).rejects.toThrow(
@@ -64,7 +64,7 @@ describe('HeroService', () => {
   });
 
   describe('delete', () => {
-    it('should return a hero after delete by id', async () => {
+    it('deve retornar o herói que foi excluído por id', async () => {
       const response = await service.delete(heroMock[0].id);
 
       expect(response).toEqual(heroMock[0]);
@@ -74,7 +74,7 @@ describe('HeroService', () => {
       });
     });
 
-    it('should return an error when trying to delete a hero', async () => {
+    it('deve disparar uma exceção ao tentar excluir um herói', async () => {
       jest.spyOn(prisma.hero, 'delete').mockRejectedValueOnce(Error);
 
       await expect(service.delete('invalid')).rejects.toThrow(
@@ -88,7 +88,7 @@ describe('HeroService', () => {
   });
 
   describe('create', () => {
-    it('should return a hero after create', async () => {
+    it('deve retornar um herói após sua criação', async () => {
       const response = await service.create(createHeroMock);
 
       expect(response).toEqual(heroMock[0]);
@@ -98,7 +98,7 @@ describe('HeroService', () => {
       });
     });
 
-    it('should return an error when trying to create a hero', async () => {
+    it('deve disparar uma exceção ao tentar criar um herói', async () => {
       jest.spyOn(prisma.hero, 'create').mockRejectedValueOnce(Error);
 
       await expect(
@@ -117,7 +117,7 @@ describe('HeroService', () => {
   });
 
   describe('update', () => {
-    it('should return a hero after update', async () => {
+    it('deve retornar um herói após sua atualização', async () => {
       const response = await service.update(heroMock[0].id, updateHeroMock);
 
       expect(response).toEqual({
@@ -132,7 +132,7 @@ describe('HeroService', () => {
       });
     });
 
-    it('should return an error when trying to update a hero', async () => {
+    it('deve disparar uma exceção ao tentar atualizar um herói', async () => {
       jest.spyOn(prisma.hero, 'update').mockRejectedValueOnce(Error);
 
       await expect(
@@ -152,7 +152,7 @@ describe('HeroService', () => {
   });
 
   describe('findAll', () => {
-    it('should return an array of heroes with pagination object', async () => {
+    it('deve retornar um objeto com paginação e uma lista de heróis', async () => {
       const response = await service.findAll({
         limit: 10,
         page: 1,
@@ -169,7 +169,7 @@ describe('HeroService', () => {
       });
     });
 
-    it('should return an array of heroes with pagination object and not send query params', async () => {
+    it('deve retornar um objeto com paginação e uma lista de heróis sem enviar os dados de paginação', async () => {
       const response = await service.findAll({
         limit: Number(undefined),
         page: Number(undefined),
@@ -186,7 +186,7 @@ describe('HeroService', () => {
       });
     });
 
-    it('should return an array of heroes result after search by name', async () => {
+    it('deve retornar um objeto com paginação e uma lista de heróis após pesquisar', async () => {
       const response = await service.findAll({
         search: heroMock[0].name,
         limit: 10,
