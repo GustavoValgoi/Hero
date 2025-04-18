@@ -19,7 +19,7 @@ services:
   api:
     build:
       context: .
-      dockerfile: backend/Dockerfile
+      dockerfile: api/Dockerfile
     container_name: hero_api
     environment:
       DATABASE_URL: mysql://root:root@database:3306/hero_db
