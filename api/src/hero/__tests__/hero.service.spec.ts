@@ -4,8 +4,10 @@ import { HeroService } from '../hero.service';
 import { PrismaService } from '../../prisma/prisma.service';
 import {
   createHeroMock,
+  findAllMock,
   heroMock,
   heroPrismaMock,
+  updateHeroMock,
 } from '../__mocks__/hero.mock';
 import { HeroRepository } from '../repositories/hero.repository';
 
@@ -73,15 +75,9 @@ describe('HeroService', () => {
     });
 
     it('should return an error when trying to delete a hero', async () => {
-      jest
-        .spyOn(prisma.hero, 'delete')
-        .mockRejectedValueOnce(
-          new BadRequestException(
-            'Houve um problema ao excluir o herói, tente novamente!',
-          ),
-        );
+      jest.spyOn(prisma.hero, 'delete').mockRejectedValueOnce(Error);
 
-      await expect(service.delete(heroMock[0].id)).rejects.toThrow(
+      await expect(service.delete('invalid')).rejects.toThrow(
         new BadRequestException(
           'Houve um problema ao excluir o herói, tente novamente!',
         ),
@@ -105,17 +101,109 @@ describe('HeroService', () => {
     it('should return an error when trying to create a hero', async () => {
       jest.spyOn(prisma.hero, 'create').mockRejectedValueOnce(Error);
 
-      const response = await service.create(createHeroMock);
-
-      console.log('response ', response);
-
-      await expect(service.create(createHeroMock)).rejects.toThrow(
+      await expect(
+        service.create({
+          ...createHeroMock,
+          date_of_birth: new Date('invalid'),
+        }),
+      ).rejects.toThrow(
         new BadRequestException(
           'Houve um problema ao criar o herói, verifique os dados e tente novamente!',
         ),
       );
 
       expect(prisma.hero.create).toHaveBeenCalledTimes(1);
+    });
+  });
+
+  describe('update', () => {
+    it('should return a hero after update', async () => {
+      const response = await service.update(heroMock[0].id, updateHeroMock);
+
+      expect(response).toEqual({
+        ...heroMock[0],
+        is_active: false,
+        date_of_birth: new Date('1996-01-10'),
+      });
+      expect(prisma.hero.update).toHaveBeenCalledTimes(1);
+      expect(prisma.hero.update).toHaveBeenCalledWith({
+        where: { id: heroMock[0].id },
+        data: updateHeroMock,
+      });
+    });
+
+    it('should return an error when trying to update a hero', async () => {
+      jest.spyOn(prisma.hero, 'update').mockRejectedValueOnce(Error);
+
+      await expect(
+        service.update(heroMock[0].id, {
+          ...heroMock[0],
+          is_active: false,
+          date_of_birth: new Date('invalid'),
+        }),
+      ).rejects.toThrow(
+        new BadRequestException(
+          'Houve um problema ao atualizar o herói, verifique os dados e tente novamente!',
+        ),
+      );
+
+      expect(prisma.hero.update).toHaveBeenCalledTimes(1);
+    });
+  });
+
+  describe('findAll', () => {
+    it('should return an array of heroes with pagination object', async () => {
+      const response = await service.findAll({
+        limit: 10,
+        page: 1,
+      });
+
+      expect(response).toEqual(findAllMock);
+      expect(prisma.hero.count).toHaveBeenCalledTimes(1);
+      expect(prisma.hero.findMany).toHaveBeenCalledTimes(1);
+      expect(prisma.hero.findMany).toHaveBeenCalledWith({
+        where: {},
+        take: 10,
+        skip: 0,
+      });
+    });
+
+    it('should return an array of heroes with pagination object and not send query params', async () => {
+      const response = await service.findAll({
+        limit: Number(undefined),
+        page: Number(undefined),
+      });
+
+      expect(response).toEqual(findAllMock);
+      expect(prisma.hero.count).toHaveBeenCalledTimes(1);
+      expect(prisma.hero.findMany).toHaveBeenCalledTimes(1);
+      expect(prisma.hero.findMany).toHaveBeenCalledWith({
+        where: {},
+        take: 10,
+        skip: 0,
+      });
+    });
+
+    it('should return an array of heroes result after search by name', async () => {
+      const response = await service.findAll({
+        search: heroMock[0].name,
+        limit: 10,
+        page: 1,
+      });
+
+      expect(response).toEqual(findAllMock);
+      expect(prisma.hero.count).toHaveBeenCalledTimes(1);
+      expect(prisma.hero.findMany).toHaveBeenCalledTimes(1);
+      expect(prisma.hero.findMany).toHaveBeenCalledWith({
+        where: {
+          OR: [
+            { name: { contains: heroMock[0].name } },
+            { nickname: { contains: heroMock[0].name } },
+          ],
+        },
+        take: 10,
+        skip: 0,
+      });
     });
   });
 });

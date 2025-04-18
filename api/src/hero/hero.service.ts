@@ -15,32 +15,34 @@ export class HeroService {
   constructor(private readonly heroRepository: HeroRepository) {}
 
   async create(body: CreateHeroDto): Promise<HeroEntity> {
-    try {
-      return this.heroRepository.create({
+    return this.heroRepository
+      .create({
         ...body,
         date_of_birth: new Date(body.date_of_birth),
+      })
+      .then(response => response)
+      .catch(() => {
+        throw new BadRequestException(
+          'Houve um problema ao criar o herói, verifique os dados e tente novamente!',
+        );
       });
-    } catch {
-      throw new BadRequestException(
-        'Houve um problema ao criar o herói, verifique os dados e tente novamente!',
-      );
-    }
   }
 
   async update(id: string, body: UpdateHeroDto): Promise<HeroEntity> {
     await this.findById(id);
 
-    try {
-      if (body.date_of_birth) {
-        body.date_of_birth = new Date(body.date_of_birth);
-      }
-
-      return this.heroRepository.update(id, body);
-    } catch {
-      throw new BadRequestException(
-        'Houve um problema ao atualizar o herói, verifique os dados e tente novamente!',
-      );
+    if (body.date_of_birth) {
+      body.date_of_birth = new Date(body.date_of_birth);
     }
+
+    return this.heroRepository
+      .update(id, body)
+      .then(response => response)
+      .catch(() => {
+        throw new BadRequestException(
+          'Houve um problema ao atualizar o herói, verifique os dados e tente novamente!',
+        );
+      });
   }
 
   async findById(id: string): Promise<HeroEntity> {
@@ -56,13 +58,14 @@ export class HeroService {
   async delete(id: string): Promise<HeroEntity> {
     await this.findById(id);
 
-    try {
-      return this.heroRepository.delete(id);
-    } catch {
-      throw new BadRequestException(
-        'Houve um problema ao excluir o herói, tente novamente!',
-      );
-    }
+    return this.heroRepository
+      .delete(id)
+      .then(response => response)
+      .catch(() => {
+        throw new BadRequestException(
+          'Houve um problema ao excluir o herói, tente novamente!',
+        );
+      });
   }
 
   async findAll(query: IQuery): Promise<IPagination<HeroEntity>> {

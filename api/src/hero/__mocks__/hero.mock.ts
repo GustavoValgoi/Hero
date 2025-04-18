@@ -1,3 +1,4 @@
+import { IPagination } from 'src/interfaces/pagination.interface';
 import { CreateHeroDto } from '../dtos/create.dto';
 import { UpdateHeroDto } from '../dtos/update.dto';
 import { HeroEntity } from '../entities/hero.entity';
@@ -28,7 +29,16 @@ export const createHeroMock: CreateHeroDto = {
 };
 
 export const updateHeroMock: UpdateHeroDto = {
+  date_of_birth: new Date('1996-01-10'),
   is_active: false,
+};
+
+export const findAllMock: IPagination<HeroEntity> = {
+  page: 1,
+  limit: 10,
+  count: 1,
+  total_pages: 1,
+  data: heroMock,
 };
 
 export const heroPrismaMock = {
@@ -36,7 +46,11 @@ export const heroPrismaMock = {
     findFirst: jest.fn().mockResolvedValue(heroMock[0]),
     findMany: jest.fn().mockResolvedValue(heroMock),
     create: jest.fn().mockResolvedValue(heroMock[0]),
-    update: jest.fn().mockResolvedValue({ ...heroMock[0], is_active: false }),
+    update: jest.fn().mockResolvedValue({
+      ...heroMock[0],
+      is_active: false,
+      date_of_birth: new Date('1996-01-10'),
+    }),
     delete: jest.fn().mockResolvedValue(heroMock[0]),
     count: jest.fn().mockResolvedValue(1),
   },
