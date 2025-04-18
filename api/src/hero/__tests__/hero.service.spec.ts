@@ -163,6 +163,7 @@ describe('HeroService', () => {
       expect(prisma.hero.findMany).toHaveBeenCalledTimes(1);
       expect(prisma.hero.findMany).toHaveBeenCalledWith({
         where: {},
+        orderBy: { created_at: 'desc' },
         take: 10,
         skip: 0,
       });
@@ -179,6 +180,7 @@ describe('HeroService', () => {
       expect(prisma.hero.findMany).toHaveBeenCalledTimes(1);
       expect(prisma.hero.findMany).toHaveBeenCalledWith({
         where: {},
+        orderBy: { created_at: 'desc' },
         take: 10,
         skip: 0,
       });
@@ -201,6 +203,7 @@ describe('HeroService', () => {
             { nickname: { contains: heroMock[0].name } },
           ],
         },
+        orderBy: { created_at: 'desc' },
         take: 10,
         skip: 0,
       });
