@@ -1,4 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
+import { MockedPrismaService } from '../__mocks__/prisma.mock';
 import { PrismaService } from '../prisma.service';
 import { PrismaClient } from 'generated/prisma';
 
@@ -9,7 +10,10 @@ describe('PrismaService', () => {
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [PrismaService, PrismaClient],
-    }).compile();
+    })
+      .overrideProvider(PrismaService)
+      .useClass(MockedPrismaService)
+      .compile();
 
     service = module.get<PrismaService>(PrismaService);
     prisma = module.get<PrismaClient>(PrismaClient);
@@ -19,18 +23,16 @@ describe('PrismaService', () => {
     jest.clearAllMocks();
   });
 
-  it('should be defined', () => {
+  it('deve estar definido', () => {
     expect(service).toBeDefined();
     expect(prisma).toBeDefined();
   });
 
   describe('onModuleInit', () => {
-    it('should have been called', async () => {
-      const spy = jest.spyOn(service, 'onModuleInit');
-
+    it('deve fazer a conexão com o DB', async () => {
+      const spy = jest.spyOn(service, '$connect');
       await service.onModuleInit();
-
-      expect(spy.mock.invocationCallOrder[0]).toEqual(1);
+      expect(spy).toHaveBeenCalled();
     });
   });
 });
