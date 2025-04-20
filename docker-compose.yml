@@ -34,6 +34,8 @@ services:
       context: .
       dockerfile: frontend/Dockerfile
     container_name: hero_frontend
+    environment:
+      VITE_BASE_API: http://localhost:3000
     ports:
       - 80:80
     restart: always

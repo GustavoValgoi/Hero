@@ -1,7 +1,10 @@
 import { configureStore } from '@reduxjs/toolkit';
+import heroReducer from '../reducers/hero.reducer';
 
 export const store = configureStore({
-  reducer: {},
+  reducer: {
+    hero: heroReducer,
+  },
   middleware: getDefaultMiddleware =>
     getDefaultMiddleware({
       serializableCheck: false,
