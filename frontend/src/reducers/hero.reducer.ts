@@ -48,7 +48,7 @@ export const findAll = createAsyncThunk(
 
 export const findHeroById = createAsyncThunk(
   'hero/get',
-  async (id: number, thunkAPI) => {
+  async (id: string, thunkAPI) => {
     try {
       const { useGET } = useApi();
       const res = await useGET(`/hero/${id}`);
