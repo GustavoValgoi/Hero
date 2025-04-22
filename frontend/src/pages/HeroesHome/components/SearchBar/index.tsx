@@ -1,17 +1,24 @@
-import { ReactElement } from 'react';
-import { Button, Col, Form, InputGroup, Row } from 'react-bootstrap';
+import { FormEvent, ReactElement } from 'react';
+import { Button, Col, Form, InputGroup } from 'react-bootstrap';
 import { FaSearch } from 'react-icons/fa';
 import { InputGroupSearch } from './styled';
 
 type Props = {
+  value: string;
+  setValue: (param: string) => void;
   create: () => void;
+  handleSearch: (e: FormEvent<HTMLFormElement>) => void;
 };
 
-export const SearchBar = ({ create }: Props): ReactElement => {
+export const SearchBar = (props: Props): ReactElement => {
   return (
-    <Row>
+    <Form className="row" onSubmit={props.handleSearch}>
       <Col lg={1}>
-        <Button onClick={create} variant="primary rounded-5 w-100">
+        <Button
+          type="button"
+          onClick={props.create}
+          variant="primary rounded-5 w-100"
+        >
           Criar
         </Button>
       </Col>
@@ -27,12 +34,16 @@ export const SearchBar = ({ create }: Props): ReactElement => {
             className="border-0 bg-transparent rounded-start rounded-5"
             placeholder="Digite o nome do herói"
             type="text"
+            value={props.value || ''}
+            onChange={e => props.setValue(e.target.value)}
           />
         </InputGroupSearch>
       </Col>
       <Col lg={1}>
-        <Button variant="light rounded-5 border w-100">Buscar</Button>
+        <Button variant="light rounded-5 border w-100" type="submit">
+          Buscar
+        </Button>
       </Col>
-    </Row>
+    </Form>
   );
 };

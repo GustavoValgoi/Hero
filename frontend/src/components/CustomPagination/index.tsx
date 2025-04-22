@@ -77,10 +77,6 @@ export function CustomPagination<T>({
 
   return (
     <Pagination>
-      <Pagination.First
-        onClick={() => handlePageChange(1)}
-        disabled={data.page === 1}
-      />
       <Pagination.Prev
         onClick={() => handlePageChange(data.page - 1)}
         disabled={data.page === 1}
@@ -88,10 +84,6 @@ export function CustomPagination<T>({
       {renderPaginationItems<T>(data)}
       <Pagination.Next
         onClick={() => handlePageChange(data.page + 1)}
-        disabled={data.page === data.total_pages}
-      />
-      <Pagination.Last
-        onClick={() => handlePageChange(data.total_pages)}
         disabled={data.page === data.total_pages}
       />
     </Pagination>

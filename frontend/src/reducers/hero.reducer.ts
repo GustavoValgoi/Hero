@@ -119,7 +119,7 @@ export const updateHero = createAsyncThunk(
 
 export const deleteHero = createAsyncThunk(
   'hero/delete',
-  async (id: number, thunkAPI) => {
+  async (id: string, thunkAPI) => {
     try {
       const { useDELETE } = useApi();
       const res = await useDELETE(`/hero/${id}`);
@@ -156,7 +156,6 @@ export const heroReducer = createSlice({
       .addCase(findAll.pending, state => {
         state.loading = true;
         state.status = StatusTypeEnum.Pending;
-        state.message = '';
       })
       .addCase(findAll.fulfilled, (state, action) => {
         state.loading = false;
@@ -188,10 +187,11 @@ export const heroReducer = createSlice({
         state.status = StatusTypeEnum.Pending;
         state.message = '';
       })
-      .addCase(createHero.fulfilled, state => {
+      .addCase(createHero.fulfilled, (state, action) => {
         state.loading = false;
         state.status = StatusTypeEnum.Success;
         state.heroes = null;
+        state.hero = action.payload;
         state.message = 'Herói cadastrado com sucesso!';
       })
       .addCase(createHero.rejected, (state, action) => {

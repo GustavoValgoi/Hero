@@ -26,7 +26,14 @@ const CardLayout = styled.div`
       margin-bottom: 0;
     }
 
-    &.disable {
+    &:hover {
+      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.4);
+      cursor: pointer;
+    }
+  }
+
+  &.disable {
+    .card-content {
       img {
         filter: grayscale(100%);
       }
@@ -34,11 +41,6 @@ const CardLayout = styled.div`
       p {
         color: #666;
       }
-    }
-
-    &:hover {
-      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.4);
-      cursor: pointer;
     }
   }
 

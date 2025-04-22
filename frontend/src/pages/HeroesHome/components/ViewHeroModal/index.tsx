@@ -1,7 +1,8 @@
 import { ReactElement } from 'react';
-import { Button, Col, Container, Image, Modal, Row } from 'react-bootstrap';
-import { IHero } from '../../../../interfaces/hero/hero.interface';
+import { Button, Col, Container, Modal, Row } from 'react-bootstrap';
 import { ViewModal } from './styled';
+import { IHero } from '../../../../interfaces/hero/hero.interface';
+import { CustomImage } from '../../../../components/CustomImage';
 
 type Props = {
   show: boolean;
@@ -14,13 +15,17 @@ export const ViewHeroModal = (props: Props): ReactElement => {
     <ViewModal show={props.show} onHide={props.handleClose} centered>
       {props.hero && (
         <>
-          <Modal.Header className="p-4" closeButton>
+          <Modal.Header className="p-4 border-bottom" closeButton>
             <Modal.Title>{props.hero.nickname}</Modal.Title>
           </Modal.Header>
-          <Modal.Body>
+          <Modal.Body className="border-bottom">
             <Container>
               <Col className="text-center w-100 pt-3">
-                <Image src={props.hero.avatar_url} alt={props.hero.nickname} />
+                <CustomImage
+                  src={props.hero.avatar_url}
+                  alt={props.hero.nickname}
+                  fallbackSrc="/no-image.jpg"
+                />
               </Col>
               <Row className="mt-5">
                 <Col className="w-50">

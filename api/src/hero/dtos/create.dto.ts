@@ -1,4 +1,4 @@
-import { IsBoolean, IsDateString, IsNotEmpty, IsString } from 'class-validator';
+import { IsBoolean, IsNotEmpty, IsString, Matches } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 
 export class CreateHeroDto {
@@ -23,7 +23,9 @@ export class CreateHeroDto {
     description: 'Data de nascimento do herói (formato ISO)',
   })
   @IsNotEmpty({ message: 'A data de nascimento é obrigatória.' })
-  @IsDateString()
+  @Matches(/^\d{4}(-)(((0)[0-9])|((1)[0-2]))(-)([0-2][0-9]|(3)[0-1])$/i, {
+    message: 'Formato de data inválido!',
+  })
   date_of_birth: Date;
 
   @ApiProperty({
