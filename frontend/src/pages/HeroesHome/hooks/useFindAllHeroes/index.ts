@@ -41,20 +41,19 @@ export const useFindAllHeroes = (
     dispatch(findAll(urlParams));
   };
 
-  const handlePageChange = (newPage: number) => {
+  const handlePageChange = (newPage: number): void => {
     if (heroes && newPage > 0 && newPage <= heroes?.total_pages) {
       setPage(newPage);
     }
   };
 
-  const executeFindAll = () => {
+  const executeFindAll = (): void => {
     setIptSearch('');
     dispatch(
       findAll(
         new URLSearchParams({
           limit: String(10),
           page: String(1),
-          search: String(''),
         }),
       ),
     );

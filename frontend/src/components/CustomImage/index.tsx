@@ -11,9 +11,9 @@ type Props = {
  * Componente de imagem customizada que exibe uma imagem com um fallback
  * caso ocorra um erro no carregamento da imagem original.
  *
- * @param {string} src - URL da imagem principal que será exibida.
- * @param {string} alt - Texto alternativo para a imagem, importante para acessibilidade.
- * @param {string} fallbackSrc - URL de uma imagem alternativa que será exibida caso ocorra um erro no carregamento da imagem original.
+ * @param {string} props.src - URL da imagem principal que será exibida.
+ * @param {string} props.alt - Texto alternativo para a imagem, importante para acessibilidade.
+ * @param {string} props.fallbackSrc - URL de uma imagem alternativa que será exibida caso ocorra um erro no carregamento da imagem original.
  *
  * @return {ReactElement} - Retorna um componente `<Image>` com a lógica de fallback para exibição da imagem.
  */

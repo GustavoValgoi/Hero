@@ -12,7 +12,7 @@ type Props = {
 };
 
 /**
- * Componente de modal para exibir os detalhes de um herói. Mostra informações como nome completo,
+ * Componente de modal para exibir os detalhes de um herói. Mostra informações como nome completo, nome de guerra,
  * data de nascimento, universo, habilidade e uma imagem do herói.
  *
  * @param {Props} props - As propriedades que o componente recebe.
