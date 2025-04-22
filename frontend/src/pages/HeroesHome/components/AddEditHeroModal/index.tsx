@@ -1,7 +1,7 @@
 import { FormEvent, ReactElement } from 'react';
 import { Button, Form, Modal, Row } from 'react-bootstrap';
-import { AddEditValues } from '../../hooks/useAddEditHero';
 import { CustomInput } from '../../../../components/CustomInput';
+import { AddEditValues } from '../../hooks/useAddEditHero/types/use-add-edit.type';
 
 type Props = {
   show: boolean;
@@ -12,6 +12,21 @@ type Props = {
   handleSubmit: (e: FormEvent<HTMLFormElement>) => void;
 };
 
+/**
+ * Componente de modal para adicionar ou editar um herói.
+ * Este modal exibe um formulário com campos para informações do herói.
+ * Dependendo da propriedade 'edit', ele pode ser usado para criar ou editar um herói existente.
+ *
+ * @param {Props} props - As propriedades que o componente recebe.
+ * @param {boolean} props.show - Controla se o modal está visível ou não.
+ * @param {boolean} props.edit - Indica se é um modal de edição ou criação.
+ * @param {boolean} props.validated - Controla se o formulário foi validado.
+ * @param {AddEditValues} props.values - Valores do formulário, incluindo funções para alterar o estado.
+ * @param {function} props.handleClose - Função para fechar o modal.
+ * @param {function} props.handleSubmit - Função chamada ao submeter o formulário.
+ *
+ * @returns {ReactElement} - O modal com o formulário para adicionar ou editar o herói.
+ */
 export const AddEditHeroModal = (props: Props): ReactElement => {
   return (
     <Modal show={props.show} onHide={props.handleClose} centered>

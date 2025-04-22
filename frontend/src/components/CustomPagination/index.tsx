@@ -1,5 +1,6 @@
 import { ReactElement } from 'react';
 import { Pagination } from 'react-bootstrap';
+import { StylePagination } from './styled';
 import { IPagination } from '../../common/interfaces/pagination.interface';
 
 type Props<T> = {
@@ -7,10 +8,29 @@ type Props<T> = {
   handlePageChange: (param: number) => void;
 };
 
+/**
+ * Componente de paginação customizada, que exibe os itens de paginação de acordo com o número total de páginas
+ * e permite navegar entre as páginas, mostrando uma quantidade limitada de páginas por vez.
+ *
+ * @param {IPagination<T>} data - Dados de paginação que incluem informações sobre a página atual,
+ * total de páginas e outros detalhes da paginação.
+ * @param {(param: number) => void} handlePageChange - Função que lida com a mudança de página,
+ * recebendo o número da nova página a ser carregada.
+ *
+ * @return {ReactElement} - Retorna um componente de paginação com controles de navegação para avançar e voltar.
+ */
 export function CustomPagination<T>({
   data,
   handlePageChange,
 }: Props<T>): ReactElement {
+  /**
+   * Função para renderizar os itens de paginação com base no total de páginas e página atual.
+   * Exibe a página inicial, páginas vizinhas e usa "..." para representar páginas intermediárias.
+   *
+   * @param {IPagination<T>} arr - Dados de paginação, incluindo página atual e total de páginas.
+   *
+   * @return {JSX.Element[]} - Lista de itens de paginação para renderizar no componente.
+   */
   function renderPaginationItems<T>(arr: IPagination<T>) {
     const pages = [];
     const maxPagesToShow = 5;
@@ -76,16 +96,18 @@ export function CustomPagination<T>({
   }
 
   return (
-    <Pagination>
+    <StylePagination>
       <Pagination.Prev
+        className="previous-page"
         onClick={() => handlePageChange(data.page - 1)}
         disabled={data.page === 1}
       />
       {renderPaginationItems<T>(data)}
       <Pagination.Next
+        className="next-page"
         onClick={() => handlePageChange(data.page + 1)}
         disabled={data.page === data.total_pages}
       />
-    </Pagination>
+    </StylePagination>
   );
 }

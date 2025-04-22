@@ -7,8 +7,6 @@ import { FaXmark } from 'react-icons/fa6';
 export const CustomToast = () => {
   const { message, type, show, setShow } = useToast();
 
-  console.log('message', message);
-
   return (
     <ToastContainer className="p-3" position="top-end" style={{ zIndex: 1 }}>
       <Toast

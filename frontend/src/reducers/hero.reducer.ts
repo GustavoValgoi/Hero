@@ -7,13 +7,13 @@ import { StatusTypeEnum } from '../common/enums/status.enum';
 import { ICreateHero } from '../interfaces/hero/create-hero.interface';
 import { IUpdateHero } from '../interfaces/hero/update-hero.interface';
 
-export interface HeroState {
+export type HeroState = {
   hero: IHero | null;
   heroes: IPagination<IHero> | null;
   loading: boolean;
   message: string;
   status: StatusTypeEnum | null;
-}
+};
 
 const initialState: HeroState = {
   hero: null,
@@ -23,6 +23,12 @@ const initialState: HeroState = {
   message: '',
 };
 
+/**
+ * Busca todos os heróis com paginação a partir da query fornecida.
+ *
+ * @param {URLSearchParams} query - Filtros e paginação.
+ * @return {Promise<IPagination<IHero>>} Lista paginada de heróis.
+ */
 export const findAll = createAsyncThunk(
   'hero/all',
   async (query: URLSearchParams, thunkAPI) => {
@@ -46,6 +52,12 @@ export const findAll = createAsyncThunk(
   },
 );
 
+/**
+ * Busca um herói pelo ID.
+ *
+ * @param {string} id - ID do herói.
+ * @return {Promise<IHero>} Dados do herói encontrado.
+ */
 export const findHeroById = createAsyncThunk(
   'hero/get',
   async (id: string, thunkAPI) => {
@@ -69,6 +81,12 @@ export const findHeroById = createAsyncThunk(
   },
 );
 
+/**
+ * Cria um novo herói com os dados fornecidos.
+ *
+ * @param {ICreateHero} body - Dados para criação.
+ * @return {Promise<IHero>} Herói criado.
+ */
 export const createHero = createAsyncThunk(
   'hero/create',
   async (body: ICreateHero, thunkAPI) => {
@@ -92,6 +110,12 @@ export const createHero = createAsyncThunk(
   },
 );
 
+/**
+ * Atualiza um herói existente.
+ *
+ * @param {IUpdateHero} body - Dados e ID do herói.
+ * @return {Promise<IHero>} Herói atualizado.
+ */
 export const updateHero = createAsyncThunk(
   'hero/update',
   async (body: IUpdateHero, thunkAPI) => {
@@ -117,6 +141,12 @@ export const updateHero = createAsyncThunk(
   },
 );
 
+/**
+ * Remove um herói pelo ID.
+ *
+ * @param {string} id - ID do herói.
+ * @return {Promise<any>} Resultado da exclusão.
+ */
 export const deleteHero = createAsyncThunk(
   'hero/delete',
   async (id: string, thunkAPI) => {
@@ -234,5 +264,12 @@ export const heroReducer = createSlice({
   },
 });
 
+/**
+ * Slice que gerencia o estado de heróis (lista, detalhe, loading e mensagens).
+ */
 export const { resetStates } = heroReducer.actions;
+
+/**
+ * Reseta estados auxiliares como loading, status e mensagens.
+ */
 export default heroReducer.reducer;

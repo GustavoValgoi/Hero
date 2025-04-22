@@ -36,9 +36,11 @@ const CardLayout = styled.div`
     .card-content {
       img {
         filter: grayscale(100%);
+        opacity: 0.7;
       }
 
       p {
+        opacity: 0.7;
         color: #666;
       }
     }

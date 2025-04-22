@@ -10,10 +10,23 @@ type Props = {
   handleSearch: (e: FormEvent<HTMLFormElement>) => void;
 };
 
+/**
+ * Componente de barra de pesquisa para buscar heróis, incluindo um campo de texto e um botão de "Criar".
+ * Ele permite que o usuário pesquise heróis pelo nome e também crie um novo herói.
+ * A barra de pesquisa chama as funções `handleSearch` e `create` quando os respectivos botões são acionados.
+ *
+ * @param {Props} props - As propriedades que o componente recebe.
+ * @param {string} props.value - O valor atual da pesquisa (texto digitado pelo usuário).
+ * @param {function} props.setValue - Função para atualizar o valor da pesquisa.
+ * @param {function} props.create - Função para criar um novo herói.
+ * @param {function} props.handleSearch - Função para lidar com a pesquisa de heróis.
+ *
+ * @returns {ReactElement} - A barra de pesquisa com a funcionalidade de pesquisa e criação.
+ */
 export const SearchBar = (props: Props): ReactElement => {
   return (
     <Form className="row" onSubmit={props.handleSearch}>
-      <Col lg={1}>
+      <Col lg={1} className="my-2">
         <Button
           type="button"
           onClick={props.create}
@@ -22,8 +35,8 @@ export const SearchBar = (props: Props): ReactElement => {
           Criar
         </Button>
       </Col>
-      <Col lg={10} className="d-flex justify-content-center">
-        <InputGroupSearch className="mb-3 bg-white rounded-5 px-1">
+      <Col lg={10} className="my-2">
+        <InputGroupSearch className="bg-white rounded-5 px-1">
           <InputGroup.Text
             className="border-0 bg-transparent"
             id="basic-addon1"
@@ -39,7 +52,7 @@ export const SearchBar = (props: Props): ReactElement => {
           />
         </InputGroupSearch>
       </Col>
-      <Col lg={1}>
+      <Col lg={1} className="my-2">
         <Button variant="light rounded-5 border w-100" type="submit">
           Buscar
         </Button>

@@ -2,7 +2,7 @@ import { InputGroup } from 'react-bootstrap';
 import styled from 'styled-components';
 
 const InputGroupSearch = styled(InputGroup)`
-  height: 40px;
+  height: 35px;
 
   .form-control {
     &::placeholder {

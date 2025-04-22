@@ -1,8 +1,9 @@
 import { ReactElement } from 'react';
-import { Button, Col, Container, Modal, Row } from 'react-bootstrap';
 import { ViewModal } from './styled';
+import { Button, Col, Container, Modal, Row } from 'react-bootstrap';
 import { IHero } from '../../../../interfaces/hero/hero.interface';
 import { CustomImage } from '../../../../components/CustomImage';
+import { formatDate } from '../../../../utils/format-date.util';
 
 type Props = {
   show: boolean;
@@ -10,6 +11,17 @@ type Props = {
   handleClose: () => void;
 };
 
+/**
+ * Componente de modal para exibir os detalhes de um herói. Mostra informações como nome completo,
+ * data de nascimento, universo, habilidade e uma imagem do herói.
+ *
+ * @param {Props} props - As propriedades que o componente recebe.
+ * @param {boolean} props.show - Indica se o modal está visível ou não.
+ * @param {IHero | null} props.hero - O objeto do herói a ser exibido.
+ * @param {function} props.handleClose - Função para fechar o modal.
+ *
+ * @returns {ReactElement} - O modal de exibição de detalhes do herói.
+ */
 export const ViewHeroModal = (props: Props): ReactElement => {
   return (
     <ViewModal show={props.show} onHide={props.handleClose} centered>
@@ -34,12 +46,7 @@ export const ViewHeroModal = (props: Props): ReactElement => {
                 </Col>
                 <Col className="w-50">
                   <p className="fw-semibold mb-2">Data de Nascimento</p>
-                  <p>
-                    {new Date(props.hero.date_of_birth).toLocaleDateString(
-                      'pt-BR',
-                      { timeZone: 'UTC' },
-                    )}
-                  </p>
+                  <p>{formatDate(props.hero.date_of_birth)}</p>
                 </Col>
               </Row>
               <Row className="mt-4">

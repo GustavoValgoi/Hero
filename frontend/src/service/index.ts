@@ -5,13 +5,13 @@ const axiosInstance = axios.create({
   baseURL,
 });
 
-interface UseApiFunctions {
+type UseApiFunctions = {
   usePOST<T>(url: string, bodyData: T): Promise<AxiosResponse>;
   usePUT<T>(url: string, bodyData: T): Promise<AxiosResponse>;
   useGET(url: string): Promise<AxiosResponse>;
   useDELETE(url: string): Promise<AxiosResponse>;
   axiosInstance?: AxiosInstance;
-}
+};
 
 export const useApi = (): UseApiFunctions => {
   const usePOST = async <T>(
