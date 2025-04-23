@@ -145,7 +145,7 @@ export const updateHero = createAsyncThunk(
  * Remove um herói pelo ID.
  *
  * @param {string} id - ID do herói.
- * @return {Promise<any>} Resultado da exclusão.
+ * @return {Promise<IHero>} Resultado da exclusão.
  */
 export const deleteHero = createAsyncThunk(
   'hero/delete',
