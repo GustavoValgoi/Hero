@@ -20,7 +20,7 @@ model Hero {
   nickname      String   @db.VarChar(50)
   date_of_birth DateTime
   universe      String   @db.VarChar(20)
-  main_power    String   @db.VarChar(50)
+  main_power    String   @db.VarChar(120)
   avatar_url    String   @db.VarChar(255)
   is_active     Boolean
   created_at    DateTime @default(now())

@@ -53,12 +53,18 @@ Acesse os diretórios do projeto: **api e frontend**, via terminal, instale as d
   npm install
 ```
 
-### Backend
+### API
 
-Rode as migrações com o comando:
+Rode as migrações com o comando, acessando via terminal a pasta **api**:
 
 ```bash
   npx prisma migrate deploy
+```
+
+se desejar popular o banco de dados, execute o comando anterior de migrate para confirmar que todos os migrations foram feitos e então execute o seguinte comando:
+
+```bash
+  npm run prisma:seed
 ```
 
 Certifique-se que a porta 3000 está disponível, caso contrário configure uma variável de ambiente chamada **PORT** no **.env da pasta api** com o número da porta que deseja utilizar e inicie o servidor:
